@@ -81,6 +81,8 @@ Relazione: **1 commessa -> N cantieri**.
 
 ## Avvio locale
 
+> Nota: l'app inizializza automaticamente le tabelle SQLite al primo avvio, quindi non restituisce errore anche se non hai ancora eseguito una migrazione.
+
 1. Installa dipendenze:
 ```bash
 npm install

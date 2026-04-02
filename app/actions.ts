@@ -3,9 +3,11 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
+import { ensureDb } from '@/lib/ensure-db';
 import { StatoCantiere, StatoCommessa } from '@prisma/client';
 
 export async function creaCommessa(formData: FormData) {
+  await ensureDb();
   await prisma.commessa.create({
     data: {
       nomeCommessa: String(formData.get('nomeCommessa')),
@@ -22,6 +24,7 @@ export async function creaCommessa(formData: FormData) {
 }
 
 export async function aggiornaCommessa(id: string, formData: FormData) {
+  await ensureDb();
   await prisma.commessa.update({
     where: { id },
     data: {
@@ -41,11 +44,13 @@ export async function aggiornaCommessa(id: string, formData: FormData) {
 }
 
 export async function eliminaCommessa(id: string) {
+  await ensureDb();
   await prisma.commessa.update({ where: { id }, data: { attiva: false, statoCommessa: 'DISATTIVATA' } });
   revalidatePath('/');
 }
 
 export async function creaCantiere(formData: FormData) {
+  await ensureDb();
   const commessaId = String(formData.get('commessaId'));
   await prisma.cantiere.create({
     data: {
@@ -69,6 +74,7 @@ export async function creaCantiere(formData: FormData) {
 }
 
 export async function aggiornaCantiere(id: string, formData: FormData) {
+  await ensureDb();
   const commessaId = String(formData.get('commessaId'));
   await prisma.cantiere.update({
     where: { id },
@@ -92,6 +98,7 @@ export async function aggiornaCantiere(id: string, formData: FormData) {
 }
 
 export async function eliminaCantiere(id: string, commessaId: string) {
+  await ensureDb();
   await prisma.cantiere.delete({ where: { id } });
   revalidatePath(`/commesse/${commessaId}`);
   revalidatePath('/cantieri');

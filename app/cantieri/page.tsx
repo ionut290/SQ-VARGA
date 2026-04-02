@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import { ensureDb } from '@/lib/ensure-db';
 import { LABEL_STATI_CANTIERE } from '@/lib/constants';
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export default async function CantieriPage({ searchParams }: Props) {
+  await ensureDb();
   const where = {
     ...(searchParams.q
       ? { nomeCantiere: { contains: searchParams.q } }

@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { prisma } from '@/lib/prisma';
+import { ensureDb } from '@/lib/ensure-db';
 import { LABEL_STATI_CANTIERE } from '@/lib/constants';
 
 const MappaCantieri = dynamic(() => import('@/components/MappaCantieri').then((m) => m.MappaCantieri), {
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export default async function MappaPage({ searchParams }: Props) {
+  await ensureDb();
   const where = {
     ...(searchParams.commessaId ? { commessaId: searchParams.commessaId } : {}),
     ...(searchParams.stato ? { statoCantiere: searchParams.stato as never } : {}),

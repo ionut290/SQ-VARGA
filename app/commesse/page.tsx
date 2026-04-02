@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import { ensureDb } from '@/lib/ensure-db';
 import { LABEL_STATI_COMMESSA } from '@/lib/constants';
 import { eliminaCommessa } from '@/app/actions';
 
 export default async function CommessePage() {
+  await ensureDb();
   const commesse = await prisma.commessa.findMany({
     include: { _count: { select: { cantieri: true } } },
     orderBy: { dataCreazione: 'desc' }

@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
+import { ensureDb } from '@/lib/ensure-db';
 import { CantiereForm } from '@/components/CantiereForm';
 import { creaCantiere, eliminaCantiere } from '@/app/actions';
 import { LABEL_STATI_CANTIERE, LABEL_STATI_COMMESSA } from '@/lib/constants';
 
 export default async function CommessaDettaglioPage({ params }: { params: { id: string } }) {
+  await ensureDb();
   const commessa = await prisma.commessa.findUnique({
     where: { id: params.id },
     include: { cantieri: { orderBy: { nomeCantiere: 'asc' } } }
