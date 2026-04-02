@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum StatoCommessa {
+  ATTIVA
+  SOSPESA
+  CHIUSA
+  DISATTIVATA
+}
+
+enum StatoCantiere {
+  PIANIFICATO
+  IN_CORSO
+  COMPLETATO
+  BLOCCATO
+}
+
+model Commessa {
+  id             String         @id @default(cuid())
+  nomeCommessa   String
+  codiceCommessa String         @unique
+  descrizione    String?
+  cliente        String
+  statoCommessa  StatoCommessa  @default(ATTIVA)
+  dataCreazione  DateTime       @default(now())
+  note           String?
+  attiva         Boolean        @default(true)
+  cantieri       Cantiere[]
+
+  @@index([statoCommessa])
+}
+
+model Cantiere {
+  id            String        @id @default(cuid())
+  commessaId    String
+  nomeCantiere  String
+  indirizzo     String
+  comune        String
+  provincia     String
+  latitudine    Float
+  longitudine   Float
+  descrizione   String?
+  statoCantiere StatoCantiere @default(PIANIFICATO)
+  note          String?
+  commessa      Commessa      @relation(fields: [commessaId], references: [id], onDelete: Cascade)
+
+  @@index([commessaId])
+  @@index([comune])
+  @@index([statoCantiere])
+}
