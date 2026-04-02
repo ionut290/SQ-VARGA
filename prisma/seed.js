@@ -37,8 +37,7 @@ async function main() {
         longitudine: 7.6507,
         statoCantiere: 'PIANIFICATO'
       }
-    ],
-    skipDuplicates: true
+    ]
   });
 }
 

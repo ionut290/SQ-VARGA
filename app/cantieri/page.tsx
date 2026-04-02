@@ -14,7 +14,7 @@ type Props = {
 export default async function CantieriPage({ searchParams }: Props) {
   const where = {
     ...(searchParams.q
-      ? { nomeCantiere: { contains: searchParams.q, mode: 'insensitive' as const } }
+      ? { nomeCantiere: { contains: searchParams.q } }
       : {}),
     ...(searchParams.comune ? { comune: searchParams.comune } : {}),
     ...(searchParams.stato ? { statoCantiere: searchParams.stato as never } : {}),

@@ -1,9 +1,11 @@
+import { notFound } from 'next/navigation';
 import { CommessaForm } from '@/components/CommessaForm';
 import { aggiornaCommessa } from '@/app/actions';
 import { prisma } from '@/lib/prisma';
 
 export default async function ModificaCommessaPage({ params }: { params: { id: string } }) {
-  const commessa = await prisma.commessa.findUniqueOrThrow({ where: { id: params.id } });
+  const commessa = await prisma.commessa.findUnique({ where: { id: params.id } });
+  if (!commessa) notFound();
 
   return (
     <div className="card">

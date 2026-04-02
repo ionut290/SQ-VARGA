@@ -1,9 +1,11 @@
+import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { CantiereForm } from '@/components/CantiereForm';
 import { aggiornaCantiere } from '@/app/actions';
 
 export default async function ModificaCantierePage({ params }: { params: { id: string } }) {
-  const cantiere = await prisma.cantiere.findUniqueOrThrow({ where: { id: params.id } });
+  const cantiere = await prisma.cantiere.findUnique({ where: { id: params.id } });
+  if (!cantiere) notFound();
 
   return (
     <div className="card">

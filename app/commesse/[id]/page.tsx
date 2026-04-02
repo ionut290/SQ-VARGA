@@ -1,14 +1,17 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { CantiereForm } from '@/components/CantiereForm';
 import { creaCantiere, eliminaCantiere } from '@/app/actions';
 import { LABEL_STATI_CANTIERE, LABEL_STATI_COMMESSA } from '@/lib/constants';
 
 export default async function CommessaDettaglioPage({ params }: { params: { id: string } }) {
-  const commessa = await prisma.commessa.findUniqueOrThrow({
+  const commessa = await prisma.commessa.findUnique({
     where: { id: params.id },
     include: { cantieri: { orderBy: { nomeCantiere: 'asc' } } }
   });
+
+  if (!commessa) notFound();
 
   return (
     <section className="grid">
@@ -47,7 +50,8 @@ export default async function CommessaDettaglioPage({ params }: { params: { id: 
                 <td>{cantiere.nomeCantiere}</td>
                 <td>{cantiere.comune}</td>
                 <td>{LABEL_STATI_CANTIERE[cantiere.statoCantiere]}</td>
-                <td>
+                <td className="actions">
+                  <Link href={`/cantieri/${cantiere.id}/edit`}>Modifica</Link>
                   <form action={eliminaCantiere.bind(null, cantiere.id, commessa.id)}>
                     <button type="submit">Elimina</button>
                   </form>

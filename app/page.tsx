@@ -13,6 +13,7 @@ export default async function Home() {
     <section>
       <div className="card actions">
         <Link href="/commesse/new">+ Nuova commessa</Link>
+        <Link href="/commesse">Vai a tutte le commesse</Link>
         <Link href="/mappa">Vai alla mappa cantieri</Link>
       </div>
       <div className="grid">

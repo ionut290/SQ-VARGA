@@ -71,6 +71,7 @@ Relazione: **1 commessa -> N cantieri**.
 
 ## Pagine principali
 - `/` Home con elenco commesse, numero cantieri, link rapidi
+- `/commesse` Elenco commesse dedicato
 - `/commesse/new` Creazione commessa
 - `/commesse/[id]` Dettaglio commessa + elenco cantieri + inserimento nuovo cantiere
 - `/commesse/[id]/edit` Modifica commessa

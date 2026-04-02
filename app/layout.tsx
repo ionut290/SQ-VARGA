@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <h1>Gestione Commesse</h1>
           <nav>
             <Link href="/">Home</Link>
+            <Link href="/commesse">Commesse</Link>
             <Link href="/cantieri">Cantieri</Link>
             <Link href="/mappa">Mappa</Link>
           </nav>
