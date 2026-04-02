@@ -120,3 +120,15 @@ Apri `http://localhost:3000`.
 - Aggiungere autenticazione (es. Auth.js)
 - Aggiungere audit log e allegati documentali
 - Aggiungere validazioni schema con Zod
+
+## Deploy su Netlify (fix 404)
+Se vedi la pagina Netlify **"Page not found"** significa che il sito non sta servendo il runtime Next.js.
+
+Questa repo ora include:
+- `netlify.toml` con plugin ufficiale Next.js
+- build command: `npm run prisma:generate && npm run build`
+
+### Variabili ambiente minime su Netlify
+- `DATABASE_URL`
+
+> Nota: per produzione su Netlify è consigliato usare un database esterno (es. PostgreSQL/Neon/Supabase) invece di SQLite locale.
